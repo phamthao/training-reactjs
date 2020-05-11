@@ -1,31 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ListEmployee extends Component {
+function ListEmployee(props) {
 
-    onChange(e) {
-        const employee = this.props.employees.find(employee => employee.id === e.target.value);
-        if (typeof this.props.setEmployee === 'function') {
-            this.props.setEmployee(employee);
+    function onChange(e) {
+        const employee = props.employees.find(employee => employee.id === e.target.value);
+        if (typeof props.setEmployee === 'function') {
+            props.setEmployee(employee);
         }
     }
 
-    render() {
-        return (
-            <header className="text-white text-center">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                            <div className="form-group">
-                                <select className="form-control" value={this.props.employeeId} onChange={this.onChange.bind(this)}>
-                                    {this.props.employees.map(employee => <option key={employee.id} value={employee.id}>{employee.employee_name}</option>)}
-                                </select>
-                            </div>
+    return (
+        <header className="text-white text-center">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                        <div className="form-group">
+                            <select className="form-control" value={props.employeeId} onChange={onChange}>
+                                {props.employees.map(employee => <option key={employee.id} value={employee.id}>{employee.employee_name}</option>)}
+                            </select>
                         </div>
                     </div>
                 </div>
-            </header>
-        );
-    }
+            </div>
+        </header>
+    );
 }
 
 export default ListEmployee;
