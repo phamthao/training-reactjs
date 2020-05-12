@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { setDetail } from '../state/actions'
 
 function ListEmployee(props) {
-
-    function onChange(e) {
-        props.setDetail(e.target.value);
-    }
+    
+    const { onChange } = props;
 
     return (
         <header className="text-white text-center">
@@ -25,12 +24,19 @@ function ListEmployee(props) {
     );
 }
 
+const mapStateToProps = (state, ownProps) => {
+
+    return {
+        employee: state.employee
+    }
+}
+
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        setDetail: (employee_id) => {
-            dispatch({ type: "SET_DETAIL", employee_id })
+        onChange: (e) => {
+            dispatch(setDetail(e.target.value))
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(ListEmployee);
+export default connect(mapStateToProps, mapDispatchToProps)(ListEmployee);

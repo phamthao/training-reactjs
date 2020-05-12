@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import ListEmployee from './Component/ListEmployee';
-import DetailEmployee from './Component/DetailEmployee';
+import ListEmployee from './components/ListEmployee';
+import DetailEmployee from './components/DetailEmployee';
+import { setList } from './state/actions'
 
 class Employee extends Component {
 
-    componentDidMount = () => {
-        this.props.getList();
+    constructor(props) {
+        super(props);
+        this.state = props;
     }
 
+    componentDidMount = () => {
+        axios.get('http://dummy.restapiexample.com/api/v1/employees')
+            .then(res => {
+                const employees = res.data.data;
+                this.setState({ ...this.state, employees });
+            })
+            .catch(error => console.log(error));
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.employees) {
+            this.props.setList(this.state.employees);
+        }
+    }
+    
     render() {
         return (
             <div>
@@ -30,12 +47,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getList: () => {
-            axios.get('http://dummy.restapiexample.com/api/v1/employees')
-            .then(res => {
-                dispatch({ type: "SET_LIST", employees: res.data.data });
-            })
-            .catch(error => console.log(error));
+        setList: (employees) => {
+            dispatch(setList(employees))
         }
     }
 }

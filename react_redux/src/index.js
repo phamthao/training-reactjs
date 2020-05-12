@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Employee from './Employee';
-import EmployeeStore from './EmployeeStore';
+import store from './state/store';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <Provider store={EmployeeStore}>
+    <Provider store={store}>
         <Employee />
     </Provider>,
     document.getElementById('root')
