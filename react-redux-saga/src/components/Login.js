@@ -1,55 +1,62 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { loginUserAction, cancelLogin } from '../actions/login';
+import { loginAction, cancelLoginAction } from '../state/actions/login';
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            message: null
+        }
+    }
  
     componentDidMount() {
         document.title = 'Login';
     }
+    
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.message === this.state.message) {
+            this.setState({ ...this.state, message: this.props.message});
+        }
+    }
+    
 
     onHandleLogin = (event) => {
         event.preventDefault();
 
+        this.setState({ ...this.state, message: 'Loading...'});
+
         const data = {
           id: event.target.id.value,
-          password: event.target.password.value
+          userId: event.target.userId.value
         };
-
-        console.log(data);
         
-        this.props.loginUserAction(data);
+        this.props.loginAction(data);
     }
 
-    cancelLogin = (event) => {
-      this.props.cancelLogin();
+    cancelLoginAction = (event) => {
+      this.props.cancelLoginAction();
     }
   
     render() {
-        let isSuccess, message;
-        
-        if (this.props.hasOwnProperty('login')) {
-            isSuccess = this.props.login.login;
-            message = this.props.login.message;
-        }
-
         return (
             <div>
+                {this.props.failNumber === 3 ? <Redirect to='blocked' /> : ''}
                 <h3>Login Page</h3>
-                {!isSuccess ? <div>{message}</div> : <Redirect to='employee' />}
+                {this.props.isLogged ? <Redirect to='employee' /> : <div>{this.state.message}</div>}
                 <form onSubmit={this.onHandleLogin}>
                     <div>
-                        <label htmlFor="id">Employee ID</label>
+                        <label htmlFor="id">ID</label>
                         <input type="text" name="id" id="id" />
                     </div>
                     <div>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" />
+                        <label htmlFor="userId">UserId</label>
+                        <input type="text" name="userId" id="userId" />
                     </div>
                     <div>
                         <button type="submit">Login</button>
-                        <button type="button" onClick={this.cancelLogin}>Cancel</button>
+                        <button type="button" onClick={this.cancelLoginAction}>Cancel</button>
                     </div>
                 </form>
             </div>
@@ -59,17 +66,19 @@ class Login extends Component {
 
 const mapStateToProps = (state) => { 
     return {
-        login: state.login
+        isLogged: state.login.login,
+        message: state.login.message,
+        failNumber: state.login.failNumber
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginUserAction: (data) => {
-            dispatch(loginUserAction(data))
+        loginAction: (data) => {
+            dispatch(loginAction(data))
         },
-        cancelLogin: () => {
-          dispatch(cancelLogin())
+        cancelLoginAction: () => {
+          dispatch(cancelLoginAction())
         }
     }
 }

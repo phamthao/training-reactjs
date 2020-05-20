@@ -1,5 +1,5 @@
 import { put, call  } from 'redux-saga/effects';
-import { getRequest } from '../services/services';
+import { getRequest } from '../../api/Api';
 
 import * as types from '../actions'
 

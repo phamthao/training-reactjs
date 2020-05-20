@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getListEmployee } from '../actions/Employee';
+import { getListEmployee } from '../state/actions/employee';
 
 class Employee extends Component {
  
@@ -13,8 +13,6 @@ class Employee extends Component {
     }
 
     render() {
-        console.log(this.props.list);
-        
         return (
             <div>
                 {!this.props.list.length ? 'Loading...' : (
