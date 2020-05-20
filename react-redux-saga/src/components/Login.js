@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { loginUserAction } from '../actions/login';
+import { loginUserAction, cancelLogin } from '../actions/login';
 
 class Login extends Component {
  
@@ -16,8 +16,14 @@ class Login extends Component {
           id: event.target.id.value,
           password: event.target.password.value
         };
+
+        console.log(data);
         
         this.props.loginUserAction(data);
+    }
+
+    cancelLogin = (event) => {
+      this.props.cancelLogin();
     }
   
     render() {
@@ -43,6 +49,7 @@ class Login extends Component {
                     </div>
                     <div>
                         <button type="submit">Login</button>
+                        <button type="button" onClick={this.cancelLogin}>Cancel</button>
                     </div>
                 </form>
             </div>
@@ -60,6 +67,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         loginUserAction: (data) => {
             dispatch(loginUserAction(data))
+        },
+        cancelLogin: () => {
+          dispatch(cancelLogin())
         }
     }
 }

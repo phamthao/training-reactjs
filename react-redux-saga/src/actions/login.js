@@ -6,3 +6,9 @@ export const loginUserAction = (value) => {
     payload: value
   }
 };
+
+export const cancelLogin = () => {
+  return {
+    type: types.CANCEL_LOGIN,
+  }
+};

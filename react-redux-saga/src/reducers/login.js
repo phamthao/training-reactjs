@@ -6,6 +6,7 @@ const initState = {
 };
 
 export default function(state = initState, action) {
+  console.log(action);
   switch(action.type) {
     case types.LOGIN_USER_SUCCESS:
       return { 
@@ -15,7 +16,7 @@ export default function(state = initState, action) {
     case types.LOGIN_USER_ERROR:
       return { 
         ...state, 
-        message: 'Login fail'
+        message: action.message
       };
     default:
       return state;
