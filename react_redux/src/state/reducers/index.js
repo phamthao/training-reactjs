@@ -10,10 +10,10 @@ const reducer = (state = initialState, action) => {
         case SET_LIST:
             return {
                 ...state,
-                employees: action.employees
+                employees: action.payload.employees
             };
         case SET_DETAIL:
-            let employee = state.employees.find(employee => employee.id === action.employee_id);
+            let employee = state.employees.find(employee => employee.id === action.payload.employee_id);
 
             if (!employee) {
                 employee = {};

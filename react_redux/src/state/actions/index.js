@@ -4,13 +4,13 @@ export const SET_DETAIL = 'SET_DETAIL';
 export const setList = (value) => {
     return {
         type: SET_LIST,
-        employees: value
+        payload: value
     }
 }
 
 export const setDetail = (value) => {
     return {
         type: SET_DETAIL,
-        employee_id: value
+        payload: value
     }
 }

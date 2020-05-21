@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onChange: (e) => {
-            dispatch(setDetail(e.target.value))
+            dispatch(setDetail({employee_id: e.target.value}))
         }
     }
 }

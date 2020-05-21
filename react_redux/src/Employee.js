@@ -48,7 +48,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         setList: (employees) => {
-            dispatch(setList(employees))
+            dispatch(setList({employees: employees}))
         }
     }
 }
