@@ -3,7 +3,7 @@ import login from './login';
 import employee from './employee';
 
 const rootReducer = combineReducers({
-  login, employee
+  login, employee,
 });
 
 export default rootReducer;

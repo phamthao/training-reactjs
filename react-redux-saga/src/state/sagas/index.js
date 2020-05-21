@@ -1,11 +1,13 @@
-import { takeLatest, fork, take, cancel } from 'redux-saga/effects';
+import {
+  takeLatest, fork, take, cancel,
+} from 'redux-saga/effects';
 import { login } from './login';
 import { getListEmployee } from './employee';
 
 import * as types from '../actions';
 
 function* watchLogin() {
-  while(true) {   
+  while (true) {
     const task = yield takeLatest(types.LOGIN_USER, login);
     yield take(types.CANCEL_LOGIN);
     yield cancel(task);
@@ -13,7 +15,7 @@ function* watchLogin() {
 }
 
 function* watchFetchList() {
-    yield takeLatest(types.GET_LIST, getListEmployee);
+  yield takeLatest(types.GET_LIST, getListEmployee);
 }
 
 function* rootSaga() {
